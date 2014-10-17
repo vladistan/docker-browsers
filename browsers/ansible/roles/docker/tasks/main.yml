@@ -6,6 +6,6 @@
 
 
   - name: Docker | run 
-    docker: image=mnichols/browsers
+    docker: image=mnichols/browsers:v1.0
     sudo: yes
     tags: docker

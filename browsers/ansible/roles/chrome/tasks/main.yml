@@ -1,0 +1,17 @@
+---
+
+  - name: Chrome | Add key
+    tags: chrome
+    apt_key: url=https://dl-ssl.google.com/linux/linux_signing_key.pub state=present
+
+  - name: Chrome | Update sources
+    tags: chrome
+    apt_repository: repo="deb http://dl.google.com/linux/chrome/deb/ stable main" update_cache=yes state=present
+
+  - name: Chrome | Update packages
+    tags: chrome
+    apt: update_cache=yes
+
+  - name: Chrome | Install Chrome
+    tags: chrome
+    apt: name=google-chrome-stable update_cache=yes

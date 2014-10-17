@@ -1,12 +1,29 @@
 ---
-  - name: Common | Update server
+
+  - name: Common | Add repos
+    tags: common
+    apt_repository: repo='{{item.name}}' state=present
+    with_items:
+        - { name: 'deb http://archive.ubuntu.com/ubuntu trusty main universe' }
+        - { name: 'deb http://security.ubuntu.com/ubuntu trusty-security main universe' }
+        - { name: 'deb http://us.archive.ubuntu.com/ubuntu/ trusty-updates main universe' }
+
+  - name: Common | Update packages
+    tags: common
     apt: update_cache=yes
-    tags: common
 
-  - name: Common | Install cUrl
-    apt: name=curl state=present update_cache=yes
+  - name: Common | Install prereqs
     tags: common
-
-  - name: Common | Install python-pycurl
-    apt: name=python-pycurl state=present update_cache=yes cache_valid_time=600
-    tags: common
+    apt: name={{item}} state=present update_cache=yes cache_valid_time=600
+    with_items:
+        - software-properties-common
+        - wget
+        - unzip
+        - curl
+        - python-pycurl
+        - x11vnc
+        - xvfb
+        - xfonts-100dpi
+        - xfonts-75dpi
+        - xfonts-scalable
+        - xfonts-cyrillic
