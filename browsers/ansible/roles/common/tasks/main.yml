@@ -1,0 +1,41 @@
+---
+  - name: Common | Update server
+    apt: update_cache=yes
+    tags: common
+
+  - name: Common | Install cUrl
+    apt: name=curl state=present update_cache=yes
+    tags: common
+
+  - name: Common | Install python-pycurl
+    apt: name=python-pycurl state=present update_cache=yes cache_valid_time=600
+    tags: common
+
+  - name: Common | Install python-software-properties
+    apt: name=python-software-properties state=present update_cache=yes
+    tags: common
+
+  - name: Common | Install python setup tools
+    apt: name=python-setuptools state=present update_cache=yes
+    sudo: yes
+    tags: common
+
+  - name: Common | Install python-dev
+    apt: name=python-dev state=present update_cache=yes
+    sudo: yes
+    tags: common
+
+  - name: Common | build-essential
+    apt: name=build-essential state=present update_cache=yes
+    sudo: yes
+    tags: common
+
+  - name: Common | Install pip
+    command: easy_install pip
+    sudo: yes
+    tags: common
+
+  - name: Common | Install docker-py
+    pip: name=docker-py
+    sudo: yes
+    tags: common

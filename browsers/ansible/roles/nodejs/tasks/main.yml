@@ -1,0 +1,15 @@
+---
+- name: Node.js | Download nave tool for node.js
+  sudo: True
+  get_url: url=https://raw.githubusercontent.com/isaacs/nave/master/nave.sh dest=/usr/local/bin/nave
+  tags: nodejs
+
+- name: Node.js | Set nave permissions to execute
+  sudo: True
+  file: path=/usr/local/bin/nave state=touch mode="777"
+  tags: nodejs
+
+- name: Node.js | Use stable nodejs
+  command: nave usemain stable
+  sudo: True
+  tags: nodejs
