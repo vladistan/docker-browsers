@@ -9,7 +9,7 @@
   file: path=/usr/local/bin/nave state=touch mode="777"
   tags: nodejs
 
-- name: Node.js | Use stable nodejs
-  command: nave usemain stable
+- name: Node.js | Use version of nodejs
+  command: nave usemain {{node_version}}
   sudo: True
   tags: nodejs
