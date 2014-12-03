@@ -24,10 +24,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, guest: 9222, host: 9222 
 
   # ansible
-  #config.vm.provision "ansible" do |ansible|
-    #ansible.playbook = "ansible/test.yml"
-    #ansible.sudo = true
-  #end
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "ansible/test.yml"
+    ansible.sudo = true
+  end
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
