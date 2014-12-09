@@ -1,21 +1,11 @@
 ---
 
-  - name: Common | Add repos
-    tags: common
-    apt_repository: repo='{{item.name}}' state=present
-    with_items:
-        - { name: 'deb http://archive.ubuntu.com/ubuntu trusty main universe' }
-        - { name: 'deb http://security.ubuntu.com/ubuntu trusty-security main universe' }
-        - { name: 'deb http://us.archive.ubuntu.com/ubuntu/ trusty-updates main universe' }
-
-  - name: Common | Update packages
-    tags: common
-    apt: update_cache=yes
-
   - name: Common | Install prereqs
     tags: common
     apt: name={{item}} state=present update_cache=yes cache_valid_time=600
     with_items:
+        - build-essential
+        - apt-transport-https
         - software-properties-common
         - wget
         - unzip

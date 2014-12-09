@@ -1,31 +1,44 @@
-FROM ansible/ubuntu14.04-ansible:stable
+FROM ubuntu:precise
 MAINTAINER Mike Nichols <nichols.mike.s@gmail.com>
 
-ENV LC_ALL C
-ENV DEBIAN_FRONTEND noninteractive
-ENV DEBCONF_NONINTERACTIVE_SEEN true
+RUN apt-get update -y && \
+    apt-get install -y python python-dev python-pip && \
+    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN apt-get -y update
+RUN pip install ansible
+#RUN ansible-galaxy install \
+#    Ansibles.hostname \
+#    Ansibles.apt \
+#    Ansibles.build-essential \
+#    Ansibles.perl \
+#    Ansibles.monit \
+#    ANXS.nginx
 
-ADD ./ansible /ansible/
-ADD inventory /etc/ansible/hosts
+WORKDIR /
+ENV PATH /usr/local/bin:$PATH
+
+COPY ./ansible /ansible/
+COPY inventory /etc/ansible/hosts
 WORKDIR /ansible/
 RUN ansible-playbook --syntax-check --list-tasks /ansible/site.yml
 RUN ansible-playbook /ansible/site.yml -c local
+
 
 # Try to shrink
 RUN apt-get clean
 RUN apt-get autoremove -y
 
-# vnc
-EXPOSE 5900:5900
-
 # chrome remote debugger port
 EXPOSE 9222:9222
+
+EXPOSE 5900:5900
 
 # selenium
 EXPOSE 4444:4444
 
-ENTRYPOINT ["/usr/bin/xvfb-run"]
-#ENTRYPOINT ["/bin/bash"]
+WORKDIR /
+
+# ENTRYPOINT ["/bin/bash"]
+ENTRYPOINT ["/usr/bin/xvfb-run","-e","xvfberr.log","-a"]
+CMD []
 
