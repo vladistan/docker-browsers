@@ -23,7 +23,6 @@ WORKDIR /ansible/
 RUN ansible-playbook --syntax-check --list-tasks /ansible/site.yml
 RUN ansible-playbook /ansible/site.yml -c local
 
-
 # Try to shrink
 RUN apt-get clean
 RUN apt-get autoremove -y
