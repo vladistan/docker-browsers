@@ -1,8 +1,0 @@
----
-  - hosts: all 
-    sudo: yes
-    roles:
-      - common
-      - azavea.docker
-      - docker
-
