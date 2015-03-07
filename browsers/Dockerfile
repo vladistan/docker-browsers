@@ -6,13 +6,6 @@ RUN apt-get update -y && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN pip install ansible
-#RUN ansible-galaxy install \
-#    Ansibles.hostname \
-#    Ansibles.apt \
-#    Ansibles.build-essential \
-#    Ansibles.perl \
-#    Ansibles.monit \
-#    ANXS.nginx
 
 WORKDIR /
 ENV PATH /usr/local/bin:$PATH
