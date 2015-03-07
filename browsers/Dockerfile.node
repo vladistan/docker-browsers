@@ -1,4 +1,4 @@
-FROM redjack/base:1
+FROM redjack/base:0.0.1-alpha1
 MAINTAINER RedJack, LLC
 
 
