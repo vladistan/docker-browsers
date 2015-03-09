@@ -2,17 +2,18 @@ all: browsers.image
 
 clean:
 	
-browsers.image: node.image Dockerfile.browsers $(shell find ansible.browsers -type f )
+browsers.image: node.image browsers/Dockerfile $(shell find browsers/ansible -type f )
 	@echo "Building Browsers"
-	docker build -f Dockerfile.browsers --rm=true -t redjack/browsers:0.0.1-alpha1 .
+	cd browsers; docker build -f Dockerfile --rm=true -t redjack/browsers:0.0.1-alpha1 .
 	touch browsers.image
 	
-node.image: base.image Dockerfile.node $(shell find ansible.node -type f )
-	docker build -f Dockerfile.node --rm=true -t redjack/node:0.0.1-alpha1 .
+	
+node.image: base.image node/Dockerfile $(shell find node/ansible -type f )
+	cd node; docker build -f Dockerfile --rm=true -t redjack/node:0.0.1-alpha1 .
 	touch node.image
 	
-base.image: Dockerfile.base
-	docker build -f Dockerfile.base --rm=true -t redjack/base:0.0.1-alpha1 .
+base.image: base/Dockerfile
+	docker build -f base/Dockerfile --rm=true -t redjack/base:0.0.1-alpha1 .
 	touch base.image
 
 push: browsers.image node.image base.image

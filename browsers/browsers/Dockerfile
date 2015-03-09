@@ -6,8 +6,9 @@ MAINTAINER RedJack, LLC
 WORKDIR /
 ENV PATH /usr/local/bin:$PATH
 
-COPY ./ansible.browsers /ansible/
-COPY inventory /etc/ansible/hosts
+COPY ./ansible /ansible/
+RUN mkdir -p /etc/ansible
+RUN echo '[local]\nlocalhost\n' > /etc/ansible/hosts
 WORKDIR /ansible/
 RUN ansible-playbook --syntax-check --list-tasks /ansible/site.yml
 RUN ansible-playbook /ansible/site.yml -c local
@@ -26,7 +27,6 @@ EXPOSE 4444:4444
 
 WORKDIR /
 
-# ENTRYPOINT ["/bin/bash"]
 ENTRYPOINT ["/usr/bin/xvfb-run","-e","xvfberr.log","-a"]
 CMD []
 

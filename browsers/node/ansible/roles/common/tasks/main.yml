@@ -2,7 +2,7 @@
 
   - name: Common | Install prereqs
     tags: common
-    apt: name={{item}} state=present update_cache=yes cache_valid_time=600
+    apt: name={{item}} state=present update_cache=yes cache_valid_time=500
     with_items:
         - build-essential
         - apt-transport-https

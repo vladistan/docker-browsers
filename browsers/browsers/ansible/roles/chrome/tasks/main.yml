@@ -13,7 +13,7 @@
     copy: content="deb http://dl-ssl.google.com/linux/chrome/deb/ stable main" dest={{google_apt_file}} owner=root group=root mode=644
     when: google_apt_exists.rc == 1
 
-  - name: Chrome | Update apt cache
+  - name: Chrome | Update apt caches
     apt: update_cache=yes
     when: google_apt_exists.rc == 1
 
