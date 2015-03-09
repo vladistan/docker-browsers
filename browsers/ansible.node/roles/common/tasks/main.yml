@@ -11,11 +11,5 @@
         - unzip
         - curl
         - python-pycurl
-        - x11vnc
-        - xvfb
-        - xfonts-100dpi
-        - xfonts-75dpi
-        - xfonts-scalable
-        - xfonts-cyrillic
         - git
 

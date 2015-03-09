@@ -1,0 +1,24 @@
+FROM redjack/base:1
+MAINTAINER RedJack, LLC
+
+
+
+WORKDIR /
+ENV PATH /usr/local/bin:$PATH
+
+ADD ./ansible.node /ansible/
+ADD inventory /etc/ansible/hosts
+WORKDIR /ansible/
+RUN ansible-playbook --syntax-check --list-tasks /ansible/site.yml
+RUN ansible-playbook /ansible/site.yml -c local
+
+# Try to shrink
+RUN apt-get clean
+RUN apt-get autoremove -y
+
+
+WORKDIR /
+ENTRYPOINT ["/bin/bash"]
+
+CMD []
+

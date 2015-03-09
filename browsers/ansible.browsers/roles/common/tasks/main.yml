@@ -1,0 +1,23 @@
+---
+
+  - name: Common | Install prereqs
+    apt: name={{item}} state=present update_cache=yes cache_valid_time=600
+    tags: common
+    with_items:
+        - apt-transport-https
+        - build-essential
+        - curl
+        - dkms
+        - git
+        - linux-headers-generic
+        - python-pycurl
+        - software-properties-common
+        - unzip
+        - wget
+        - x11vnc
+        - xfonts-100dpi
+        - xfonts-75dpi
+        - xfonts-cyrillic
+        - xfonts-scalable
+        - xvfb
+        - virtualbox-guest-utils
