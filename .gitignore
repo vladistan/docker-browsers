@@ -1,5 +1,2 @@
-.vagrant
 *.log
-browsers/base.image
-browsers/browsers.image
-browsers/node.image
+*.image
