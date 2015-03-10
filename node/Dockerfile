@@ -1,25 +1,25 @@
-FROM redjack/base:0.0.1-alpha1
+# We use Ubuntu 12.04 (precise) as our base image due to problems with Xvfb in
+# Docker on Ubuntu 14.04 (trusty)
+FROM ubuntu:precise
 MAINTAINER RedJack, LLC
 
-
-
-WORKDIR /
+ENV NODE_VERSION stable
 ENV PATH /usr/local/bin:$PATH
 
-ADD ./ansible /ansible/
-RUN mkdir -p /etc/ansible
-RUN echo '[local]\nlocalhost\n' > /etc/ansible/hosts
-WORKDIR /ansible/
-RUN ansible-playbook --syntax-check --list-tasks /ansible/site.yml
-RUN ansible-playbook /ansible/site.yml -c local
+# Install build dependencies for Nave
+RUN apt-get update \
+  && DEBIAN_FRONTEND=noninteractive apt-get install -yq \
+    build-essential \
+    curl \
+    git
+
+# Install Nave
+RUN curl -f -o /usr/local/bin/nave https://raw.githubusercontent.com/isaacs/nave/master/nave.sh
+RUN chmod a+x /usr/local/bin/nave
+
+# Build/install NodeJS
+RUN nave usemain $NODE_VERSION
 
 # Try to shrink
 RUN apt-get clean
 RUN apt-get autoremove -y
-
-
-WORKDIR /
-ENTRYPOINT ["/bin/bash"]
-
-CMD []
-

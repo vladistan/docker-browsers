@@ -1,32 +1,40 @@
-FROM redjack/node:0.0.1-alpha1
+FROM redjack/node
 MAINTAINER RedJack, LLC
 
-
-
-WORKDIR /
 ENV PATH /usr/local/bin:$PATH
 
-COPY ./ansible /ansible/
-RUN mkdir -p /etc/ansible
-RUN echo '[local]\nlocalhost\n' > /etc/ansible/hosts
-WORKDIR /ansible/
-RUN ansible-playbook --syntax-check --list-tasks /ansible/site.yml
-RUN ansible-playbook /ansible/site.yml -c local
+# Install Xvfb, VNC, and fonts
+RUN apt-get update \
+  && DEBIAN_FRONTEND=noninteractive apt-get install -yq \
+    x11vnc \
+    xfonts-100dpi \
+    xfonts-75dpi \
+    xfonts-cyrillic \
+    xfonts-scalable \
+    xvfb
+
+# Install Firefox
+RUN apt-get update \
+  && DEBIAN_FRONTEND=noninteractive apt-get install -yq \
+    firefox
+
+# Install Chrome
+RUN curl -f -s https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+RUN echo "deb http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
+RUN apt-get update \
+  && DEBIAN_FRONTEND=noninteractive apt-get install -yq \
+    google-chrome-stable
 
 # Try to shrink
 RUN apt-get clean
 RUN apt-get autoremove -y
 
-# chrome remote debugger port
+# Chrome remote debugger port
 EXPOSE 9222:9222
-
+# VNC
 EXPOSE 5900:5900
-
-# selenium
+# Selenium
 EXPOSE 4444:4444
 
-WORKDIR /
-
-ENTRYPOINT ["/usr/bin/xvfb-run","-e","xvfberr.log","-a"]
+ENTRYPOINT ["/usr/bin/xvfb-run", "-e", "xvfberr.log", "-a"]
 CMD []
-

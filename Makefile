@@ -1,22 +1,13 @@
-.PHONY: all push
+.PHONY: all node browsers
 
-all: browsers.image
+all: browsers
 
-browsers.image: node.image browsers/Dockerfile $(shell find browsers/ansible -type f )
-	@echo "Building Browsers"
-	cd browsers; docker build -f Dockerfile --rm=true -t redjack/browsers:0.0.1-alpha1 .
-	touch browsers.image
+node: node/Dockerfile
+	# Pull the base image to ensure it's up to date
+	cd node && docker build --pull -t redjack/node .
 
-
-node.image: base.image node/Dockerfile $(shell find node/ansible -type f )
-	cd node; docker build -f Dockerfile --rm=true -t redjack/node:0.0.1-alpha1 .
-	touch node.image
-
-base.image: base/Dockerfile
-	docker build -f base/Dockerfile --rm=true -t redjack/base:0.0.1-alpha1 .
-	touch base.image
-
-push: browsers.image node.image base.image
-	docker push redjack/base:0.0.1-alpha1
-	docker push redjack/node:0.0.1-alpha1
-	docker push redjack/browsers:0.0.1-alpha1
+browsers: node browsers/Dockerfile
+	# Note that we do NOT pull the base image here, because
+	# 'redjack/browsers' is built from 'redjack/node', which we'll already
+	# have built locally.
+	cd browsers && docker build -t redjack/browsers .
