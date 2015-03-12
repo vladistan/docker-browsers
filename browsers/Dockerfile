@@ -25,10 +25,6 @@ RUN apt-get update \
   && DEBIAN_FRONTEND=noninteractive apt-get install -yq \
     google-chrome-stable
 
-# Try to shrink
-RUN apt-get clean
-RUN apt-get autoremove -y
-
 # Chrome remote debugger port
 EXPOSE 9222:9222
 # VNC

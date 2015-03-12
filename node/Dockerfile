@@ -19,7 +19,3 @@ RUN chmod a+x /usr/local/bin/nave
 
 # Build/install NodeJS
 RUN nave usemain $NODE_VERSION
-
-# Try to shrink
-RUN apt-get clean
-RUN apt-get autoremove -y
