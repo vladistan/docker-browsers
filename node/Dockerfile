@@ -3,7 +3,7 @@
 FROM ubuntu:precise
 MAINTAINER RedJack, LLC
 
-ENV NODE_VERSION stable
+ENV NODE_VERSION 1.5.1
 ENV PATH /usr/local/bin:$PATH
 
 # Install build dependencies for Nave
