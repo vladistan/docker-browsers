@@ -11,7 +11,8 @@ RUN apt-get update \
   && DEBIAN_FRONTEND=noninteractive apt-get install -yq \
     build-essential \
     curl \
-    git
+    git \
+  && rm -rf /var/lib/apt/lists/*
 
 # Install Nave
 RUN curl -f -o /usr/local/bin/nave https://raw.githubusercontent.com/isaacs/nave/master/nave.sh
