@@ -20,3 +20,6 @@ RUN chmod a+x /usr/local/bin/nave
 
 # Build/install NodeJS
 RUN nave usemain $NODE_VERSION
+
+# Install global components
+RUN npm install -g bower gulp
