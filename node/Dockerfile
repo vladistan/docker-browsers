@@ -23,3 +23,5 @@ RUN nave usemain $NODE_VERSION
 
 # Install global components
 RUN npm install -g bower gulp
+
+RUN adduser --uid 1000 --ingroup adm --disabled-password --gecos '' builder
