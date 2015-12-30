@@ -35,4 +35,5 @@ RUN nave usemain $NODE_VERSION
 # Install global components
 RUN npm install -g bower gulp
 
-RUN adduser --uid 1000 --ingroup adm --disabled-password --gecos '' builder
+RUN adduser --uid 1000 --ingroup adm --disabled-password --gecos '' builder \
+ && adduser --uid  500 --ingroup adm --disabled-password --gecos '' ec2-user
