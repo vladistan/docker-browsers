@@ -1,7 +1,7 @@
 # We use Ubuntu 12.04 (precise) as our base image due to problems with Xvfb in
 # Docker on Ubuntu 14.04 (trusty)
 FROM ubuntu:precise
-MAINTAINER RedJack, LLC
+MAINTAINER Vlad Korolev, LLC
 
 ENV NODE_VERSION stable
 ENV PATH /usr/local/bin:$PATH
@@ -10,9 +10,20 @@ ENV PATH /usr/local/bin:$PATH
 RUN apt-get update \
   && DEBIAN_FRONTEND=noninteractive apt-get install -yq \
     build-essential \
+    python \
     curl \
     git \
-  && rm -rf /var/lib/apt/lists/*
+  && DEBIAN_FRONTEND=noninteractive apt-get install -y python-software-properties \
+  && DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:fkrull/deadsnakes-python2.7 \
+  && DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:ubuntu-toolchain-r/test \
+  && DEBIAN_FRONTEND=noninteractive apt-get -y update \
+  && DEBIAN_FRONTEND=noninteractive apt-get -y upgrade python \
+  && DEBIAN_FRONTEND=noninteractive apt-get -y install gcc-4.8 \
+  && DEBIAN_FRONTEND=noninteractive apt-get -y install g++-4.8 \
+  && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 50 \
+  && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 50 \
+  && DEBIAN_FRONTEND=noninteractive rm -rf /var/lib/apt/lists/*
+
 
 # Install Nave
 RUN curl -f -o /usr/local/bin/nave https://raw.githubusercontent.com/isaacs/nave/master/nave.sh
