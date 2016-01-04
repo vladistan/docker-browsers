@@ -20,6 +20,8 @@ RUN apt-get update \
   && DEBIAN_FRONTEND=noninteractive apt-get -y upgrade python \
   && DEBIAN_FRONTEND=noninteractive apt-get -y install gcc-4.8 \
   && DEBIAN_FRONTEND=noninteractive apt-get -y install g++-4.8 \
+  && DEBIAN_FRONTEND=noninteractive apt-get -y install libfreetype6 \
+  && DEBIAN_FRONTEND=noninteractive apt-get -y install libfontconfig \
   && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 50 \
   && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 50 \
   && DEBIAN_FRONTEND=noninteractive rm -rf /var/lib/apt/lists/*
@@ -31,6 +33,10 @@ RUN chmod a+x /usr/local/bin/nave
 
 # Build/install NodeJS
 RUN nave usemain $NODE_VERSION
+
+# Install phantomJS as global.  It doesn't like to be installed in local
+# direcotry when it's running on Mac through docker-machine
+RUN npm install -g phantomjs
 
 # Install global components
 RUN npm install -g bower gulp
