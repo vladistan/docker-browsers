@@ -20,6 +20,7 @@ RUN apt-get update \
   && DEBIAN_FRONTEND=noninteractive apt-get -y upgrade python \
   && DEBIAN_FRONTEND=noninteractive apt-get -y install gcc-4.8 \
   && DEBIAN_FRONTEND=noninteractive apt-get -y install g++-4.8 \
+  && DEBIAN_FRONTEND=noninteractive apt-get -y install pkg-config \
   && DEBIAN_FRONTEND=noninteractive apt-get -y install libfreetype6 \
   && DEBIAN_FRONTEND=noninteractive apt-get -y install libfontconfig \
   && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 50 \
