@@ -23,6 +23,7 @@ RUN apt-get update \
   && DEBIAN_FRONTEND=noninteractive apt-get -y install pkg-config \
   && DEBIAN_FRONTEND=noninteractive apt-get -y install libfreetype6 \
   && DEBIAN_FRONTEND=noninteractive apt-get -y install libfontconfig \
+  && DEBIAN_FRONTEND=noninteractive apt-get -y install libcairo2-dev \
   && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 50 \
   && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 50 \
   && DEBIAN_FRONTEND=noninteractive rm -rf /var/lib/apt/lists/*
