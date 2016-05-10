@@ -44,4 +44,5 @@ RUN npm install -g phantomjs
 RUN npm install -g bower gulp
 
 RUN adduser --uid 1000 --ingroup adm --disabled-password --gecos '' builder \
+ && adduser --uid  498 --ingroup adm --disabled-password --gecos '' go \
  && adduser --uid  500 --ingroup adm --disabled-password --gecos '' ec2-user
